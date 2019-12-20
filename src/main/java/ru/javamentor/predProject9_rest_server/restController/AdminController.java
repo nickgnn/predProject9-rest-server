@@ -1,4 +1,4 @@
-package ru.javamentor.predProject9_rest_server.controllers;
+package ru.javamentor.predProject9_rest_server.restController;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

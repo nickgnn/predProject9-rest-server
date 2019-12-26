@@ -8,6 +8,7 @@ import ru.javamentor.predProject9_rest_server.repository.UserRepository;
 import ru.javamentor.predProject9_rest_server.service.UserService;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByName(String name) throws DBException {
-        return null;
+        return userRepository.findByUsername(name).get();
     }
 
     @Override
@@ -40,6 +41,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User addUser(User user) throws DBException {
+        Boolean existsUser = isExistsUser(user.getUsername());
+
+        if (existsUser) {
+            return null;
+        }
+
         return userRepository.saveAndFlush(user);
     }
 
@@ -55,7 +62,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean isExistsUser(String name) throws DBException {
-        return null;
+        User user;
+
+        try {
+            user = getUserByName(name);
+
+            return user != null;
+        } catch (NoSuchElementException e) {
+            e.getMessage();
+
+            return false;
+        }
     }
 
 //    @Override
